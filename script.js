@@ -39,25 +39,44 @@ const watchPause = () => {
 }
 
 const watchStop = () => {
-
-    time.innerHTML = `Ostatni czas: ${stopwatch.textContent}`
+	time.innerHTML = `Ostatni czas: ${stopwatch.textContent}`
 
 	if (stopwatch.textContent !== '0:00') {
 		time.style.visibility = 'visible'
-        timesArray.push(stopwatch.textContent)
-        console.log(timesArray)
-
+		timesArray.push(stopwatch.textContent)
+		console.log(timesArray)
 	}
+	clearAll()
+}
 
+const watchReset = () => {
+	time.style.visibility = 'hidden'
+	timesArray = []
+	clearAll()
+}
+
+const clearAll = () => {
 	clearInterval(countTime)
-
 	stopwatch.textContent = '0:00'
 	timeList.textContent = ''
 	seconds = 0
 	minutes = 0
 }
 
+const watchHistory = () => {
+	timeList.textContent = ''
+
+	let newTime = 1
+	timesArray.forEach(el => {
+		const newEl = document.createElement('li')
+		newEl.innerHTML = `Pomiar nr ${newTime}: <span>${el}</span>`
+		newTime++
+		timeList.appendChild(newEl)
+	})
+}
+
 startBtn.addEventListener('click', watchStart)
 pauseBtn.addEventListener('click', watchPause)
 stopBtn.addEventListener('click', watchStop)
-pauseBtn.addEventListener('click', watchPause)
+resetBtn.addEventListener('click', watchReset)
+historyBtn.addEventListener('click', watchHistory)
